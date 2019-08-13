@@ -1,0 +1,17 @@
+---
+
+galaxy_info:
+  author: Rhythmic Operations <opsteam@rhythmictech.com>
+  description: Ansible Role for installing AWS EFS-Utils
+  company: Rhythmic Technologies, Inc.
+  license: MIT
+  min_ansible_version: 2.8
+  platforms:
+    - name: EL
+      versions:
+        - "6"
+        - "7"
+    - name: Ubuntu
+      versions:
+        - "bionic"
+dependencies: []
