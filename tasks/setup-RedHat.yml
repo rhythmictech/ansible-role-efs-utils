@@ -1,0 +1,18 @@
+- name: ensure rpm-build is installed
+  yum:
+    package: 'rpm-build'
+    state: 'present'
+  tags: ['efs-utils']
+
+- name: build RedHat rpm
+  command: 'make rpm'
+  args:
+    chdir: "{{ efsutils_src_dest }}"
+    creates: "{{ efsutils_src_dest }}/build/amazon-efs-utils*rpm"
+  tags: ['efs-utils']
+
+- name: use yum to install efs-utils
+  yum:
+    name: "{{ efsutils_src_dest }}/build/amazon-efs-utils*rpm"
+    state: present
+  tags: ['efs-utils']

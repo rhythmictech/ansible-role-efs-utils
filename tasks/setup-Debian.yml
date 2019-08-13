@@ -1,0 +1,21 @@
+- name: ensure binutils is installed
+  apt:
+    name: 'binutils'
+  tags: ['efs-utils']
+
+- name: run Debian build script
+  shell: "{{ efsutils_src_dest }}/build-deb.sh"
+  args:
+    chdir: "{{ efsutils_src_dest }}"
+    creates: "{{ efsutils_src_dest }}/build/amazon-efs-utils*deb"
+  tags: ['efs-utils']
+- name: find newly built name
+  shell: "ls {{ efsutils_src_dest }}/build/amazon-efs-utils*deb"
+  register: package
+- name: wait for dpkg to be available
+  shell: 'while lsof /var/lib/dpkg/lock-frontend ; do sleep 10; done;'
+  tags: ['efs-utils']
+- name: use apt to install efs-utils
+  apt:
+    deb: "{{ package.stdout }}"
+  tags: ['efs-utils']

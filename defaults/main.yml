@@ -1,0 +1,2 @@
+efsutils_repo_url: 'https://github.com/aws/efs-utils'
+efsutils_src_dest: '/usr/src/efs-utils'

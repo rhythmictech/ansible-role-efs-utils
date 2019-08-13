@@ -1,0 +1,11 @@
+- name: Checkout efs-utils
+  git:
+    repo: "{{ efsutils_repo_url }}"
+    dest: "{{ efsutils_src_dest }}"
+    version: 'HEAD'
+    clone: yes
+  tags: ['efs-utils']
+
+- name: Include OS-specific build tasks
+  include_tasks: "setup-{{ ansible_os_family }}.yml"
+  tags: ['efs-utils']
