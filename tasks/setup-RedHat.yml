@@ -1,6 +1,6 @@
 - name: ensure rpm-build is installed
   yum:
-    package: 'rpm-build'
+    name: 'rpm-build'
     state: 'present'
   tags: ['efs-utils']
 
@@ -11,8 +11,15 @@
     creates: "{{ efsutils_src_dest }}/build/amazon-efs-utils*rpm"
   tags: ['efs-utils']
 
-- name: use yum to install efs-utils
+- name: locate generated rpm package
+  find:
+    paths: "{{ efsutils_src_dest }}/build"
+    patterns: "amazon-efs-utils.*\\.rpm$"
+    use_regex: yes
+  register: rpm_file
+
+- name: use yum to install amazon-efs-utils package
   yum:
-    name: "{{ efsutils_src_dest }}/build/amazon-efs-utils*rpm"
+    name: "{{ rpm_file.files[0].path }}"
     state: present
   tags: ['efs-utils']
